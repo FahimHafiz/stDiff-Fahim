@@ -60,7 +60,8 @@ def normal_train_stDiff(model,
             # celltype = celltype.to(device)
 
             noise = torch.randn(x.shape).to(device)
-            timesteps = torch.randint(1, diffusion_step, (x.shape[0],)).long()
+            # timesteps = torch.randint(1, diffusion_step, (x.shape[0],)).long()
+            timesteps = torch.randint(1, diffusion_step, (x.shape[0],), device=x.device).long()
 
             x_t = noise_scheduler.add_noise(x,
                                             noise,
@@ -85,3 +86,4 @@ def normal_train_stDiff(model,
             t_epoch.set_postfix_str(f'{pred_type} loss:{epoch_loss:.5f}')  # type: ignore
         if is_tune:
             session.report({'loss': epoch_loss})
+
